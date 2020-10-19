@@ -11,4 +11,4 @@ spec:
       protocol: TCP
       nodePort: 30095
   selector:
-    app: drupal
+    run: drupal

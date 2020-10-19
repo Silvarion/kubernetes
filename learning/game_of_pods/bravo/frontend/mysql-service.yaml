@@ -9,5 +9,6 @@ spec:
     - port: 3306
       name: drupal-mysql
       protocol: TCP
+      targetPort: 3306
   selector:
-    app: mysql
+    app: drupal-mysql
