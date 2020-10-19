@@ -2,8 +2,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  name: drupal
   labels:
-    name: drupal
     app: drupal
 spec:
   replicas: 1
@@ -13,21 +13,18 @@ spec:
         app: drupal
     spec:
       initContainers:
-        -
-          name: init-sites-volume
+        - name: init-sites-volume
           image: drupal:8.6
-          command: ["/bin/bash", "-c"]
-          args: ["cp -r /var/www/html/sites /data/; chown www-data:www-data /data -R"]
+          command: ['/bin/bash', '-c']
+          args: ['cp -r /var/www/html/sites/ /data/; chown www-data:www-data /data/ -R']
           volumeMounts:
             - mountPath: /data
               name: vol-drupal
       containers:
-        -
+        - name: drupal
           image: drupal:8.6
-          name: drupal
           ports:
-            -
-              containerPort: 80
+            - containerPort: 80
           volumeMounts:
             - mountPath: /var/www/html/modules
               name: vol-drupal
@@ -42,7 +39,6 @@ spec:
               name: vol-drupal
               subPath: themes
       volumes:
-        -
-          name: vol-drupal
+        - name: vol-drupal
           persistentVolumeClaim:
             claimName: drupal-pvc

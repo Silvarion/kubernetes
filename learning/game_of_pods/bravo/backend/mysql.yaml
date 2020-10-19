@@ -3,6 +3,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: drupal-mysql
+  labels:
+    app: mysql
 spec:
   replicas: 1
   template:
@@ -11,40 +13,33 @@ spec:
         app: drupal-mysql
     spec:
       containers:
-        -
+        - name: cont-drupal-mysql
           image: "mysql:5.7"
-          name: cont-drupal-mysql
           ports:
-            -
+            - name: mysql
               containerPort: 3306
-              name: mysql
               protocol: TCP
           volumeMounts:
-            -
+            - name: vol-drupal-mysql
               mountPath: /var/lib/mysql
-              name: vol-drupal
               subPath: dbdata
           env:
-            -
-              name: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: drupal-mysql-secret
                   key: MYSQL_ROOT_PASSWORD
-            -
-              name: MYSQL_DATABASE
+            - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
                   name: drupal-mysql-secret
                   key: MYSQL_DATABASE
-            -
-              name: MYSQL_USER
+            - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
                   name: drupal-mysql-secret
                   key: MYSQL_USER
       volumes:
-        -
-          name: vol-drupal
+        - name: vol-drupal-mysql
           persistentVolumeClaim:
             claimName: drupal-mysql-pvc
