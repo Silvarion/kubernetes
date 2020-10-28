@@ -1,8 +1,12 @@
 ---
+# Imperative Command:
+## kubectl expose deployment drupal-mysql --port=3306 --type=ClusterIP --name=drupal-mysql-service
 apiVersion: v1
 kind: Service
 metadata:
   name: drupal-mysql-service
+  labels: 
+    tier: frontend
 spec:
   type: ClusterIP
   ports:

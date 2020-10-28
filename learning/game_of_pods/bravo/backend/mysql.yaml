@@ -1,10 +1,13 @@
 ---
+# Imperative Command:
+## kubectl create deployment drupal-mysql --image="mysql:5.7" --dry-run=client -o yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: drupal-mysql
   labels:
     app: mysql
+    tier: backend
 spec:
   replicas: 1
   template:

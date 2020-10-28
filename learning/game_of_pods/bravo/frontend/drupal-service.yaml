@@ -1,8 +1,13 @@
 ---
+# Impertive Command:
+## kubectl expose 
 apiVersion: v1
 kind: Service
 metadata:
   name: drupal-service
+  labels: 
+    tier: frontend
+    app: drupal
 spec:
   type: NodePort
   ports:
@@ -11,4 +16,4 @@ spec:
       protocol: TCP
       nodePort: 30095
   selector:
-    run: drupal
+    app: drupal
